@@ -1,0 +1,16 @@
+:root{
+    --col-bg: linear-gradient(#00311C, #011c1f);
+
+
+    --col-tex: #fff;
+    --col-fg: #DF8103;
+    --col-err: #ec3939;
+    --col-pos: #03DF81;
+    --col-ok: #2FB0F8;
+
+    --col-box-lighter: #0a316b;
+    --col-box: #0a245d;
+    --col-box-dark: #091045;
+
+    --font-fam: Bahnschrift;
+}
