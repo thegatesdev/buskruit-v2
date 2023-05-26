@@ -20,9 +20,12 @@ async function tryLogin(username, password){
     }
     const response = await fetchValidation(username, password);
     const jsonData = await response.json();
-    
-    if (jsonData.err == null) window.location.replace("redirect.php");
-    else displayErrorMessage(jsonData.err.title, jsonData.err.msg);
+
+    if (!jsonData.ok){
+        displayErrorMessage(jsonData.err.title, jsonData.err.msg);
+        return;
+    }
+    window.location.replace("redirect.php")
 }
 
 function fetchValidation(username, password){
