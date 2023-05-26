@@ -24,7 +24,7 @@ async function tryLogin(username, password){
         displayErrorMessage(jsonData.err.title, jsonData.err.msg);
         return;
     }
-    if (jsonData.redirect == null){
+    if (jsonData.redirect != null){
         window.location.replace(jsonData.redirect);
     }
 }
