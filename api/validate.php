@@ -30,7 +30,7 @@ if ($valid_user_id === false){
 }else{
     $page = get_user_page($conn, $valid_user_id);
     if (!$page) echo errorJson("Geen landings-pagina", "Dit gebruiker type heeft geen landings-pagina!");
-    else echo json_encode(["redirect" => $page]);
+    else echo json_encode(["redirect" => "pages/" . $page . ".php"]);
 }
 
 disconnect();
