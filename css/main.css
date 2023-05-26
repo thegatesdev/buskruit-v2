@@ -24,6 +24,11 @@ ul{
     list-style: none;
 }
 
+a{
+    text-decoration: none;
+    color: var(--col-ok);
+}
+
 input:focus,
 select:focus,
 textarea:focus,
@@ -91,4 +96,19 @@ button:focus {
 }
 .button-big:active{
     scale: 98%;
+}
+
+.button-quiet{
+    width: 70%;
+    cursor: pointer;
+    
+    color: #ffffff;
+    background: none;
+    border: none;
+    opacity: 70%;
+    transition-property: opacity;
+    transition-duration: 100ms;
+}
+.button-quiet:hover{
+    opacity: 95%;
 }
