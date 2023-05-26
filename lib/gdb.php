@@ -4,6 +4,7 @@ class gdb_login_settings
 {
     public function __construct(
         public string $usertable,
+        public string $id_col,
         public string $name_col,
         public string $pwd_col
     ){}
@@ -15,7 +16,7 @@ function gdb_sanitize(mysqli $conn, string $input){
 
 /**
  * Validates the inputted username and password against the columns from the login settings.
- * This only returns true if the username and passwords match.
+ * This returns the user id if the username and passwords match.
  * This may rehash passwords that require rehashing, but only when validated.
  */
 function gdb_validate(mysqli $conn, gdb_login_settings $s, string $input_username, string $input_pwd)
@@ -25,20 +26,23 @@ function gdb_validate(mysqli $conn, gdb_login_settings $s, string $input_usernam
     $input_pwd = gdb_sanitize($conn, $input_pwd);
 
     // Get hash in database
-    $hash_result = mysqli_query($conn, "SELECT $s->pwd_col FROM $s->usertable WHERE $s->name_col='$input_username' LIMIT 1");
-    if (mysqli_num_rows($hash_result) != 1) return false;
-    $hash = mysqli_fetch_array($hash_result)[0];
+    $result = mysqli_query($conn, "SELECT $s->pwd_col, $s->id_col FROM $s->usertable WHERE $s->name_col='$input_username' LIMIT 1");
+    if (mysqli_num_rows($result) != 1) return false;
+    $user = mysqli_fetch_array($result);
+
+    $user_hash = $user[0];
+    $user_id = $user[1];
 
     // Validate against user input
-    $valid = password_verify($input_pwd, $hash);
+    $valid = password_verify($input_pwd, $user_hash);
     if (!$valid) return false;
 
     // Rehash if necessary
-    if (password_needs_rehash($hash, PASSWORD_DEFAULT)) {
+    if (password_needs_rehash($user_hash, PASSWORD_DEFAULT)) {
         $new_hash = password_hash($input_pwd, PASSWORD_DEFAULT);
-        mysqli_query($conn, "UPDATE $s->usertable SET $s->pwd_col='$new_hash' WHERE $s->name_col='$input_username'");
+        mysqli_query($conn, "UPDATE $s->usertable SET $s->pwd_col='$new_hash' WHERE $s->id_col=$user_id");
     }
-    return true;
+    return $user_id;
 }
 
 /**
@@ -76,6 +80,6 @@ function gdb_update(mysqli $conn, gdb_login_settings $s, string $input_username,
 /**
  * Create a settings object for the table name, and name and password columns.
  */
-function gdb_settings_login(string $user_table, string $name_column, string $password_column){
-    return new gdb_login_settings($user_table, $name_column, $password_column);
+function gdb_settings_login(string $user_table, string $id_column, string $name_column, string $password_column){
+    return new gdb_login_settings($user_table, $id_column, $name_column, $password_column);
 }

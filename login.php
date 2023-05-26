@@ -23,8 +23,8 @@ include_once("./parts/open.php");
             <input id="login-button" type="submit" onclick="onLoginSubmit()" value="Inloggen" class="button-big">
         </div>
         <div id="login-message">
-            <h5 id="login-message-title">e</h5>
-            <p id="login-message-text">e</p>
+            <h5 id="login-message-title">Empty</h5>
+            <p id="login-message-text">Empty</p>
         </div>
     </div>
 </body>
