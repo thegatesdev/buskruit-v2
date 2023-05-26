@@ -22,9 +22,10 @@ async function tryLogin(username, password){
     const jsonData = await response.json();
 
     if (!jsonData.ok){
-        displayErrorMessage(jsonData.err.title, jsonData.err.msg);
+        displayErrorMessage(jsonData.error.title, jsonData.error.msg);
         return;
     }
+    
     window.location.replace("redirect.php")
 }
 

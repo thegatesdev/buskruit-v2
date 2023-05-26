@@ -1,6 +1,6 @@
 <?php
 
-function jsonExitError($title, $message){
+function jsonExitError($title = "", $message = ""){
     echo json_encode([
         "ok" => false,
         "error" => ["title" => $title, "msg" => $message]
