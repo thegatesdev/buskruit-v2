@@ -112,3 +112,18 @@ button:focus {
 .button-quiet:hover{
     opacity: 95%;
 }
+
+.button-action{
+    flex: 1;
+    margin: 5px;
+    
+    border: none;
+    background: #fff;
+    transition-property: scale;
+    transition-duration: 100ms;
+    color: var(--color-bg);
+}
+.button-action:active{
+    scale: 95%;
+    transition-duration: 50ms;
+}
