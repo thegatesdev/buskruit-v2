@@ -50,12 +50,14 @@ include_once("../parts/open.php");
                             <th>Prijs</th>
                             <th>Aantal</th>
                         </tr>
-                        <tr>
-                            <td>TestNaam</td>
-                            <td>TestEenheid</td>
-                            <td>TestPrijs</td>
-                            <td>TestAantal</td>
-                        </tr>
+                        <tbody class="table-content">
+                            <tr>
+                                <td>TestNaam</td>
+                                <td>TestEenheid</td>
+                                <td>TestPrijs</td>
+                                <td>TestAantal</td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
                 <h3 id="total-price">TotaalPrijs</h3>

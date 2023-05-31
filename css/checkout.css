@@ -72,6 +72,7 @@
 }
 #product-table{
     text-align: left;
+    width: 100%;
 }
 #product-table td{
     color: var(--col-tex-dim);
