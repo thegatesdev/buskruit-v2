@@ -116,9 +116,12 @@ button:focus {
 .button-action{
     flex: 1;
     margin: 5px;
+
+    font-size: larger;
+    font-weight: 500;
     
     border: none;
-    background: #fff;
+    background: none;
     transition-property: scale;
     transition-duration: 100ms;
     color: var(--color-bg);
