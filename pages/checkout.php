@@ -14,7 +14,7 @@ $page_js = array("checkout/checkout", "checkout/numpad");
 include_once("../parts/open.php");
 ?>
 <body>
-    <div id="container">
+    <div id="container" class="noselect">
         <div id="calculator">
             <input type="text" id="calc-input" autofocus></input>
             <table id="keypad">
