@@ -1,26 +1,57 @@
-import './input.js';
+const table = document.getElementById("product-table");
+const tableContent = document.getElementById("product-content");
 
-const tableContent = document.getElementById("product-table").getElementsByClassName("table-content")[0];
+const activeProducts = {
+    1: {
+        desc: "Test",
+        unit: "KG",
+        price: 2,
+        amount: 20
+    }
+};
 
-const activeProducts = {};
+updateTable();
 
 function updateTable(){
     tableContent.textContent = '';
-    for (p of activeProducts){
-        tableContent.appendChild(createTableRow(p.name, p.unit, p.price, p.amount));
+    for ([,prod] of Object.entries(activeProducts)) appendProductRow(prod);
+}
+
+async function addProduct(prodId, amount){
+    if (amount == 0) return;
+    if (prodId in activeProducts){ // Product already exists, add amount
+        activeProducts[prodId].amount += amount;
+        return;
+    }
+    const res = await fetchProduct(prodId);
+    if (!res.ok){
+        alert("Could not fetch product");
+        return;
+    } 
+    const json = await res.json();
+    if (!("product" in json)){
+        alert("Could not resolve product");
+        return;
+    }
+
+    activeProducts[prodId] = {
+        desc: json.description,
+        unit: json.unit,
+        price: json.price,
+        amount: amount
     }
 }
 
-function addProduct(prod){
-    activeProducts[prod.id] = prod;
-}
-
-function createTableRow(name, unit, price, amount){
-
+function appendProductRow(prod){
+    const row = table.insertRow(1);
+    row.insertCell().innerHTML = prod.desc;
+    row.insertCell().innerHTML = prod.unit;
+    row.insertCell().innerHTML = prod.price;
+    row.insertCell().innerHTML = prod.amount;
 }
 
 function fetchProduct(productNum){
-    return ("./api/product.php", {
+    return fetch("./api/product.php", {
         method: "POST",
         mode: 'cors',
         headers: {'Content-Type': 'application/json'}, 
