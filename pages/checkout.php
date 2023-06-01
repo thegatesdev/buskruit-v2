@@ -10,7 +10,7 @@ if (!isset($_SESSION['user'])){
 $page_title = "Kassa";
 $relative_path = "..";
 $page_css = array("checkout");
-$page_js = array("checkout/checkout");
+$page_js = array("checkout/checkout", "checkout/input");
 include_once("../parts/open.php");
 ?>
 <body>
@@ -22,6 +22,7 @@ include_once("../parts/open.php");
                     <td class="keybutton">1</td>
                     <td class="keybutton">2</td>
                     <td class="keybutton">3</td>
+                    <td class="keybutton"><</td>
                     <td></td>
                 </tr>
                 <tr>
@@ -50,7 +51,7 @@ include_once("../parts/open.php");
                             <th>Prijs</th>
                             <th>Aantal</th>
                         </tr>
-                        <tbody class="table-content">
+                        <tbody id="product-content">
                             <tr>
                                 <td>TestNaam</td>
                                 <td>TestEenheid</td>

@@ -8,14 +8,15 @@ calcDisplay.innerHTML = "0";
 let currentInput = 0;
 
 function onKeyPadPress(key){
-    if (isNaN(key.innerHTML)) handleSpecialKey(key.innerHTML);
+    // Reset after manual input
+    if (calcDisplay.value != currentInput){
+        if (isNaN(calcDisplay.value)) currentInput = 0;
+        else currentInput = parseInt(calcDisplay.value)
+    }
+    
+    if (isNaN(key.textContent)) handleSpecialKey(key.textContent);
     else{
-        const keynum = parseInt(key.innerHTML);
-        // Reset after manual input
-        if (calcDisplay.value != currentInput){
-            if (isNaN(calcDisplay.value)) currentInput = 0;
-            else currentInput = parseInt(calcDisplay.value)
-        }
+        const keynum = parseInt(key.textContent);
         
         currentInput *= 10
         currentInput += keynum;
@@ -27,6 +28,9 @@ function handleSpecialKey(value){
     switch(value){
         case "c", "C":
             currentInput = 0;
+            break;
+        case "<":
+            currentInput = Math.trunc(currentInput * 0.1);
             break;
     }
 }
