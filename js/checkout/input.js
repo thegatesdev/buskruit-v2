@@ -21,6 +21,11 @@ function onKeyPadPress(key){
         currentInput *= 10
         currentInput += keynum;
     }
+    updateInput();
+}
+
+function updateInput(value = currentInput){
+    currentInput = value;
     calcDisplay.value = currentInput;
 }
 

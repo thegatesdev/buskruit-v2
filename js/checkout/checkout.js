@@ -1,49 +1,64 @@
-const table = document.getElementById("product-table");
-const tableContent = document.getElementById("product-content");
+const tableBody = document.getElementById("product-table-body");
 
-const activeProducts = {
-    1: {
-        desc: "Test",
-        unit: "KG",
-        price: 2,
-        amount: 20
+let selectingProduct = null;
+
+function onAddProduct(){
+    if (selectingProduct === null){
+        selectingProduct = currentInput;
+    }else{
+        addProduct(selectingProduct, isNaN(currentInput) || currentInput < 1 ? 1 : currentInput);
+        updateTable();
+        selectingProduct = null;
     }
-};
+    updateInput();
+}
 
-updateTable();
+const activeProducts = {};
+const fetchingProducts = {};
 
-function updateTable(){
-    tableContent.textContent = '';
+async function updateTable(){
+    await fetchAll();
+    tableBody.innerHTML = '';
     for ([,prod] of Object.entries(activeProducts)) appendProductRow(prod);
 }
 
-async function addProduct(prodId, amount){
-    if (amount == 0) return;
-    if (prodId in activeProducts){ // Product already exists, add amount
+async function fetchAll(){
+    for ([id, f] of Object.entries(fetchingProducts)){
+        const res = await f.promise;
+        if (res.ok){
+            const json = await res.json();
+            if (json.ok){
+                const content = json.content;
+                if (id in activeProducts) activeProducts[id].amount += f.amount;
+                else activeProducts[id] = {
+                    desc: content.description,
+                    unit: content.unit,
+                    price: content.price,
+                    amount: f.amount,
+                }
+            }
+        }
+        delete fetchingProducts[id];        
+    }
+}
+
+function addProduct(prodId, amount){
+    if (prodId in activeProducts){
         activeProducts[prodId].amount += amount;
         return;
     }
-    const res = await fetchProduct(prodId);
-    if (!res.ok){
-        alert("Could not fetch product");
-        return;
-    } 
-    const json = await res.json();
-    if (!("product" in json)){
-        alert("Could not resolve product");
+    if (prodId in fetchingProducts){
+        fetchingProducts[prodId].amount += amount;
         return;
     }
-
-    activeProducts[prodId] = {
-        desc: json.description,
-        unit: json.unit,
-        price: json.price,
-        amount: amount
+    fetchingProducts[prodId] = {
+        amount: amount,
+        promise: fetchProduct(prodId),
     }
 }
 
 function appendProductRow(prod){
-    const row = table.insertRow(1);
+    const row = tableBody.appendChild(document.createElement('tr'));
     row.insertCell().innerHTML = prod.desc;
     row.insertCell().innerHTML = prod.unit;
     row.insertCell().innerHTML = prod.price;
@@ -51,7 +66,7 @@ function appendProductRow(prod){
 }
 
 function fetchProduct(productNum){
-    return fetch("./api/product.php", {
+    return fetch("../api/products/getproduct.php", {
         method: "POST",
         mode: 'cors',
         headers: {'Content-Type': 'application/json'}, 

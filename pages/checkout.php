@@ -45,27 +45,22 @@ include_once("../parts/open.php");
                 <h3>Producten</h3>
                 <div id="table-container">
                     <table id="product-table">
-                        <tr>
-                            <th>Naam</th>
-                            <th>Eenheid</th>
-                            <th>Prijs</th>
-                            <th>Aantal</th>
-                        </tr>
-                        <tbody id="product-content">
+                        <thead>
                             <tr>
-                                <td>TestNaam</td>
-                                <td>TestEenheid</td>
-                                <td>TestPrijs</td>
-                                <td>TestAantal</td>
+                                <th>Naam</th>
+                                <th>Eenheid</th>
+                                <th>Prijs</th>
+                                <th>Aantal</th>
                             </tr>
-                        </tbody>
+                        </thead>
+                        <tbody id="product-table-body"></tbody>
                     </table>
                 </div>
                 <h3 id="total-price">TotaalPrijs</h3>
             </div>
             <div id="product-actions">
                 <div>
-                    <input type="button" class="button-action" id="addbutton" value="+">
+                    <input type="button" class="button-action" onclick="onAddProduct()" id="addbutton" value="+">
                     <input type="button" class="button-action" id="removebutton" value="-">
                 </div>
                 <div>
