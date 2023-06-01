@@ -18,7 +18,7 @@
         }
 
         if (isset($page_js)) foreach($page_js as $js_name){
-            echo "<script type='module' defer async src='$relative_path/js/$js_name.js'></script>";
+            echo "<script defer async src='$relative_path/js/$js_name.js'></script>";
         }
     ?>
 </head>
