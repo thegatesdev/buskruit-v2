@@ -10,7 +10,7 @@ function onAddProduct(){
         updateTable();
         selectingProduct = null;
     }
-    updateInput();
+    updateInput(0);
 }
 
 const activeProducts = {};

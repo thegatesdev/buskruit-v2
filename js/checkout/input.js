@@ -2,40 +2,46 @@ const calcDisplay = document.getElementById("calc-input");
 const keyPadKeys = document.getElementsByClassName("keybutton");
 
 for (const key of keyPadKeys) key.onclick = function(){onKeyPadPress(key)}
-calcDisplay.innerHTML = "0";
+calcDisplay.value = "";
 
 // Currently inputted number value
 let currentInput = 0;
+let prefix = null;
 
 function onKeyPadPress(key){
-    // Reset after manual input
-    if (calcDisplay.value != currentInput){
-        if (isNaN(calcDisplay.value)) currentInput = 0;
-        else currentInput = parseInt(calcDisplay.value)
-    }
+    let input = getCurrentInput();
     
     if (isNaN(key.textContent)) handleSpecialKey(key.textContent);
     else{
         const keynum = parseInt(key.textContent);
         
-        currentInput *= 10
-        currentInput += keynum;
+        input *= 10
+        input += keynum;
+        updateInput(input);
     }
-    updateInput();
 }
 
-function updateInput(value = currentInput){
-    currentInput = value;
-    calcDisplay.value = currentInput;
+function getCurrentInput(){
+    return currentInput;
+}
+
+function updateInput(value = null){
+    currentInput = value ?? "";
+    calcDisplay.value = (prefix ?? "") + currentInput;
+}
+
+function setInputPrefix(newPrefix = null){
+    prefix = newPrefix;
+    updateInput();
 }
 
 function handleSpecialKey(value){
     switch(value){
         case "c", "C":
-            currentInput = 0;
+            updateInput(null);
             break;
         case "<":
-            currentInput = Math.trunc(currentInput * 0.1);
+            updateInput(Math.trunc(getCurrentInput() * 0.1));
             break;
     }
 }
