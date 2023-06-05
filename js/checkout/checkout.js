@@ -5,8 +5,10 @@ let selectingProduct = null;
 function onAddProduct(){
     if (selectingProduct === null){
         selectingProduct = currentInput;
+        setInputPrefix("Aantal: ");
     }else{
-        addProduct(selectingProduct, isNaN(currentInput) || currentInput < 1 ? 1 : currentInput);
+        setInputPrefix(null);
+        addProduct(selectingProduct, getCurrentInput());
         updateTable();
         selectingProduct = null;
     }

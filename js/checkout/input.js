@@ -32,7 +32,6 @@ function updateInput(value = null){
 
 function setInputPrefix(newPrefix = null){
     prefix = newPrefix;
-    updateInput();
 }
 
 function handleSpecialKey(value){
