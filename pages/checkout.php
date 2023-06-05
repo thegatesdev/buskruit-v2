@@ -11,6 +11,7 @@ $page_title = "Kassa";
 $relative_path = "..";
 $page_css = array("checkout");
 $page_js = array("checkout/checkout", "checkout/input");
+$useJquery = true;
 include_once("../parts/open.php");
 ?>
 <body>
