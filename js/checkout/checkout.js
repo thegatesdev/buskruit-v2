@@ -1,4 +1,28 @@
 
+// Connection
+
+function fetchProduct(productNum){
+    return fetch("../api/products/getproduct.php", {
+        method: "POST",
+        mode: 'cors',
+        headers: {'Content-Type': 'application/json'}, 
+        body: JSON.stringify({
+            product_id: productNum
+        }),
+    });
+}
+
+function postCheckoutItems(products){
+    return fetch("../api/products/updatecheckout.php", {
+        method: "POST",
+        mode: 'cors',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            // TODO
+        }),
+    });
+}
+
 // Products
 
 const activeProducts = {};
@@ -24,17 +48,6 @@ async function fetchProducts(){
         }
         delete fetchingProducts[id];        
     }
-}
-
-function fetchProduct(productNum){
-    return fetch("../api/products/getproduct.php", {
-        method: "POST",
-        mode: 'cors',
-        headers: {'Content-Type': 'application/json'}, 
-        body: JSON.stringify({
-            product_id: productNum
-        }),
-    });
 }
 
 function addProduct(prodId, amount){

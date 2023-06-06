@@ -25,7 +25,7 @@ function gdb_sanitize(mysqli $conn, string $input){
  * This returns the user id if the username and passwords match.
  * This may rehash passwords that require rehashing, but only when validated.
  */
-function gdb_validate(mysqli $conn, gdb_login_settings $s, string $input_username, string $input_pwd)
+function gdb_validate(mysqli $conn, $s, string $input_username, string $input_pwd)
 {
     // Sanitize user input
     $input_username = gdb_sanitize($conn, $input_username);
@@ -43,18 +43,18 @@ function gdb_validate(mysqli $conn, gdb_login_settings $s, string $input_usernam
     $valid = password_verify($input_pwd, $user_hash);
     if (!$valid) return false;
 
-    // // Rehash if necessary
-    // if (password_needs_rehash($user_hash, PASSWORD_DEFAULT)) {
-    //     $new_hash = password_hash($input_pwd, PASSWORD_DEFAULT);
-    //     mysqli_query($conn, "UPDATE $s->usertable SET $s->pwd_col='$new_hash' WHERE $s->id_col=$user_id");
-    // }
+    // Rehash if necessary
+    if (password_needs_rehash($user_hash, PASSWORD_DEFAULT)) {
+        $new_hash = password_hash($input_pwd, PASSWORD_DEFAULT);
+        mysqli_query($conn, "UPDATE $s->usertable SET $s->pwd_col='$new_hash' WHERE $s->id_col=$user_id");
+    }
     return $user_id;
 }
 
 /**
  * Check if this username exists in the columns from the login settings.
  */
-function gdb_user_exists(mysqli $conn, gdb_login_settings $s, string $input_username){
+function gdb_user_exists(mysqli $conn, $s, string $input_username){
     // Sanitize user input
     $input_username = gdb_sanitize($conn, $input_username);
     // Query amount of rows with this username
@@ -67,7 +67,7 @@ function gdb_user_exists(mysqli $conn, gdb_login_settings $s, string $input_user
  * Update or create a new user with the password hash of the input password.
  * This updates the password if the user exists, if not it creates a new user with this password.
  */
-function gdb_update(mysqli $conn, gdb_login_settings $s, string $input_username, string $input_pwd)
+function gdb_update(mysqli $conn, $s, string $input_username, string $input_pwd)
 {
     // Sanitize user input
     $input_username = gdb_sanitize($conn, $input_username);
