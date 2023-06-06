@@ -18,13 +18,13 @@ include_once("../lib/db.php");
 if (!$conn) jsonExitError("Geen verbinding", "Kon geen verbinding maken met de database!");
 
 // Validate user
-$valid_user_id = gdb_validate($conn, DB_SETTINGS, $inp_name, $inp_pwd);
+$valid_user_id = gdb_validate($conn, $dbsettings, $inp_name, $inp_pwd);
 disconnect();
 
 if ($valid_user_id === false){
     session_destroy();
     session_unset();
-    jsonExitError("Onjuiste gegevens", "De gebruikersnaam of het wachtwoord zijn incorrect!");
+    jsonExitError("Onjuiste gegevens", "De gebruikersnaam of het wachtwoord zijn incorrect!" . $inp_name . " " . $inp_pwd);
 }
 
 // Start user session

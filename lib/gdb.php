@@ -1,21 +1,5 @@
 <?php
 
-class gdb_login_settings
-{
-    public string $usertable, $id_col, $name_col, $pwd_col;
-    public function __construct(
-        string $usertable,
-        string $id_col,
-        string $name_col,
-        string $pwd_col
-    ){
-        $this->usertable = $usertable;
-        $this->id_col = $id_col;
-        $this->name_col = $name_col;
-        $this->pwd_col = $pwd_col;
-    }
-}
-
 function gdb_sanitize(mysqli $conn, string $input){
     return mysqli_real_escape_string($conn,$input);
 }
@@ -33,7 +17,9 @@ function gdb_validate(mysqli $conn, $s, string $input_username, string $input_pw
 
     // Get hash in database
     $result = mysqli_query($conn, "SELECT $s->pwd_col, $s->id_col FROM $s->usertable WHERE $s->name_col='$input_username' LIMIT 1");
-    if (mysqli_num_rows($result) != 1) return false;
+    if (mysqli_num_rows($result) != 1){   
+        return false;   
+    }
     $user = mysqli_fetch_array($result);
 
     $user_hash = $user[0];
@@ -87,5 +73,10 @@ function gdb_update(mysqli $conn, $s, string $input_username, string $input_pwd)
  * Create a settings object for the table name, and name and password columns.
  */
 function gdb_settings_login(string $user_table, string $id_column, string $name_column, string $password_column){
-    return new gdb_login_settings($user_table, $id_column, $name_column, $password_column);
+    $obj = new stdClass();
+    $obj->usertable = $user_table;
+    $obj->id_col = $id_column;
+    $obj->name_col = $name_column;
+    $obj->pwd_col = $password_column;
+    return $obj;
 }
