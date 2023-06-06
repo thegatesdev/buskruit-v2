@@ -2,12 +2,18 @@
 
 class gdb_login_settings
 {
+    public string $usertable, $id_col, $name_col, $pwd_col;
     public function __construct(
-        public string $usertable,
-        public string $id_col,
-        public string $name_col,
-        public string $pwd_col
-    ){}
+        string $usertable,
+        string $id_col,
+        string $name_col,
+        string $pwd_col
+    ){
+        $this->usertable = $usertable;
+        $this->id_col = $id_col;
+        $this->name_col = $name_col;
+        $this->pwd_col = $pwd_col;
+    }
 }
 
 function gdb_sanitize(mysqli $conn, string $input){
@@ -37,11 +43,11 @@ function gdb_validate(mysqli $conn, gdb_login_settings $s, string $input_usernam
     $valid = password_verify($input_pwd, $user_hash);
     if (!$valid) return false;
 
-    // Rehash if necessary
-    if (password_needs_rehash($user_hash, PASSWORD_DEFAULT)) {
-        $new_hash = password_hash($input_pwd, PASSWORD_DEFAULT);
-        mysqli_query($conn, "UPDATE $s->usertable SET $s->pwd_col='$new_hash' WHERE $s->id_col=$user_id");
-    }
+    // // Rehash if necessary
+    // if (password_needs_rehash($user_hash, PASSWORD_DEFAULT)) {
+    //     $new_hash = password_hash($input_pwd, PASSWORD_DEFAULT);
+    //     mysqli_query($conn, "UPDATE $s->usertable SET $s->pwd_col='$new_hash' WHERE $s->id_col=$user_id");
+    // }
     return $user_id;
 }
 
