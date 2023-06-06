@@ -4,6 +4,8 @@ session_start();
 
 include_once("../lib/json_api.php");
 
+if (!isset($_SESSION['user'])) jsonExitError("No session", "No active session");
+
 // Get user input
 $input_json = json_decode(file_get_contents('php://input'), true);
 $inp_product_id = $input_json['product_id'] ?? null;
