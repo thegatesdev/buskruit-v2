@@ -62,7 +62,7 @@ include_once("../parts/open.php");
             <div id="product-actions">
                 <div>
                     <input type="button" class="button-action" onclick="onAddProduct()" id="addbutton" value="+">
-                    <input type="button" class="button-action" id="removebutton" value="-">
+                    <input type="button" class="button-action" onclick="onRemoveProduct()" id="removebutton" value="-">
                 </div>
                 <div>
                     <input type="button" class="button-action" id="nextbutton" value="Afrekenen">

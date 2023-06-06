@@ -72,10 +72,15 @@
 }
 #product-table{
     text-align: left;
+    border-spacing: 0;
     width: 100%;
 }
 #product-table td{
     color: var(--col-tex-dim);
+}
+#product-table tr.selected{
+    border-radius: 5px;
+    background-color: var(--col-fg);
 }
 
 #product-actions{

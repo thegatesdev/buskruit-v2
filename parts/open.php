@@ -17,7 +17,7 @@
             echo "<link type='text/css' rel='stylesheet' href='$relative_path/css/$css_name.css'>";
         }
 
-        if ($useJquery === true) echo "<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js'></script>";
+        if (isset($useJquery) && $useJquery === true) echo "<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js'></script>";
 
         if (isset($page_js)) foreach($page_js as $js_name){
             echo "<script defer async src='$relative_path/js/$js_name.js'></script>";
