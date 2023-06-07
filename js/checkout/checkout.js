@@ -42,7 +42,7 @@ async function fetchProducts(){
                     unit: content.unit,
                     price: content.price,
                     amount: f.amount,
-                    storage: f.storage,
+                    storage: content.storage,
                 }
             }
         }
@@ -79,10 +79,11 @@ async function updateProductTable(){
     await fetchProducts();
     tableBody.innerHTML = '';
     for ([,prod] of Object.entries(activeProducts)){
-        if (prod.amount == 0 || prod.storage == 0){
-            removeProduct();
+        if (prod.amount == 0){
+            removeProduct(prod.id);
             continue;
         }
+        console.log(prod.amount + " -- " + prod.storage);
         prod.amount = Math.min(prod.amount, prod.storage);
         appendProductRow(prod);
     }
