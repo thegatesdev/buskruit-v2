@@ -130,3 +130,24 @@ button:focus {
     scale: 95%;
     transition-duration: 50ms;
 }
+
+.popup{
+    display: none;
+    z-index: 1;
+
+    padding: 15px;
+    padding-right: 25px;
+    padding-left: 25px;
+    font-size: smaller;
+    font-weight: lighter;
+    border-radius: 5px;
+
+    user-select: none;
+    cursor: pointer;
+    overflow: auto;
+    background: var(--col-box);
+}
+
+.popup.show{
+    display: block;
+}
