@@ -70,6 +70,7 @@ function addProduct(prodId, amount){
         fetchingProducts[prodId].amount += amount;
         return;
     }
+    if (productIds !== null && !productIds.includes(prodId)) return;
     fetchingProducts[prodId] = {
         amount: amount,
         promise: fetchProduct(prodId),
@@ -158,6 +159,6 @@ function onRemoveProduct(){
 fetchProductIds().then(value => {
     if (value !== false){
         productIds = value;
-        console.log(productIds);
-    }
+        console.log("Got product indexes.");
+    } else console.log("Failed to get product indexes.");
 });
