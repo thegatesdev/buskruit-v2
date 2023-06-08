@@ -8,6 +8,7 @@ if (!isset($_SESSION['user'])){
     exit;
 }
 
+include_once("lib/gdb.php");
 include_once("lib/login_settings.php");
 include_once("lib/db.php");
 

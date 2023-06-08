@@ -1,30 +1,40 @@
 
 // Connection
 
-function fetchProduct(productNum){
-    return fetch("../api/products/getproduct.php", {
+function fetchApi(path, jsonBody){
+    return fetch("../api/"+path, {
         method: "POST",
         mode: 'cors',
         headers: {'Content-Type': 'application/json'}, 
-        body: JSON.stringify({
-            product_id: productNum
-        }),
+        body: JSON.stringify(jsonBody),
+    });
+}
+
+function fetchProduct(productNum){
+    return fetchApi("products/meta.php", {
+        type: "getproduct",
+        product_id: productNum
     });
 }
 
 function postCheckoutItems(products){
-    return fetch("../api/products/updatecheckout.php", {
-        method: "POST",
-        mode: 'cors',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            // TODO
-        }),
+    return fetchApi("products/updatecheckout.php", {
+        // TODO
     });
+}
+
+
+async function fetchProductIds(){
+    const res = await fetchApi("products/meta.php", {type: "getindexes"});
+    if (!res.ok) return false;
+    const json = await res.json();
+    if (!json.ok) return false;
+    return json.content.product_ids;
 }
 
 // Products
 
+let productIds = null;
 const activeProducts = {};
 const fetchingProducts = {};
 
@@ -144,3 +154,10 @@ function onRemoveProduct(){
     removeProduct(input);
     updateProductTable();
 }
+
+fetchProductIds().then(value => {
+    if (value !== false){
+        productIds = value;
+        console.log(productIds);
+    }
+});
