@@ -24,7 +24,7 @@ disconnect();
 if ($valid_user_id === false){
     session_destroy();
     session_unset();
-    jsonExitError("Onjuiste gegevens", "De gebruikersnaam of het wachtwoord zijn incorrect!" . $inp_name . " " . $inp_pwd);
+    jsonExitError("Onjuiste gegevens", "De gebruikersnaam of het wachtwoord zijn incorrect!");
 }
 
 // Start user session
