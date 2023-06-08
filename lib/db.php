@@ -4,7 +4,7 @@ $conn = false;
 
 // Try to connect
 try{
-    $conn = mysqli_connect("localhost", "d71414_root", "A4S4h0CtbFcoNU8r", "d71414_buskruit");
+    $conn = mysqli_connect($sqlsettings[0], $sqlsettings[1], $sqlsettings[2], $sqlsettings[3]);
     mysqli_set_charset($conn, 'utf8');
 }catch(Exception $e){
 }
