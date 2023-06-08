@@ -14,6 +14,7 @@ if (!isset($inp_product_id)) jsonExitError("No product", "No product");
 $inp_product_id = (int)$inp_product_id;
 
 // Database connection
+include_once("../../lib/login_settings.php");
 include_once("../../lib/db.php");
 if (!$conn)
 jsonExitError("Geen verbinding", "Kon geen verbinding maken met de database!");
