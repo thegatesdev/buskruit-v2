@@ -17,10 +17,10 @@ include_once("../parts/open.php");
 <body>
     <div id="container" class="noselect">
         <div id="calculator">
-            <input type="text" id="calc-input" autofocus></input>
+            <input type="text" id="calc-input"></input>
             <table id="keypad">
                 <tr>
-                    <td class="keybutton">1</td>
+                    <td class="keybutton" autofocus>1</td>
                     <td class="keybutton">2</td>
                     <td class="keybutton">3</td>
                     <td class="keybutton"><</td>
