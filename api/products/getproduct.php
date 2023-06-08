@@ -19,9 +19,9 @@ include_once("../../lib/db.php");
 if (!$conn)
 jsonExitError("Geen verbinding", "Kon geen verbinding maken met de database!");
 
-$result = mysqli_query($conn, $q = "SELECT product_num, description, unit, price, storage FROM product WHERE product_num=$inp_product_id LIMIT 1");
+$result = mysqli_query($conn, "SELECT product_num, description, unit, price, storage FROM product WHERE product_num=$inp_product_id LIMIT 1");
 if (mysqli_num_rows($result) != 1){
-    jsonExitError("Product niet gevonden", "Dit product was niet gevonden! $q");
+    jsonExitError("Product niet gevonden", "Dit product was niet gevonden!");
 }
 
 $data = mysqli_fetch_assoc($result);
