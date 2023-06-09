@@ -70,5 +70,6 @@ include_once("../parts/open.php");
             </div>
         </div>
     </div>
+    <div id="message-popup" class="popup"></div>
 </body>
 </html>

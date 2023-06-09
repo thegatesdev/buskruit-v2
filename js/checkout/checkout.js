@@ -54,8 +54,8 @@ async function fetchProducts(){
                     amount: f.amount,
                     storage: content.storage,
                 }
-            }
-        }
+            }else showPopup(json.error.title, json.error.msg);
+        }else showPopup("Kon product niet ophalen");
         delete fetchingProducts[id];        
     }
 }
@@ -70,7 +70,10 @@ function addProduct(prodId, amount){
         fetchingProducts[prodId].amount += amount;
         return;
     }
-    if (productIds !== null && !productIds.includes(prodId)) return;
+    if (productIds !== null && !productIds.includes(prodId)){
+        showPopup("Product bestaat niet", "Dit product bestaat niet!");
+        return;
+    }
     fetchingProducts[prodId] = {
         amount: amount,
         promise: fetchProduct(prodId),
@@ -94,7 +97,6 @@ async function updateProductTable(){
             removeProduct(prod.id);
             continue;
         }
-        console.log(prod.amount + " -- " + prod.storage);
         prod.amount = Math.min(prod.amount, prod.storage);
         appendProductRow(prod);
     }
@@ -134,6 +136,7 @@ function onAddProduct(){
     }else{
         addProduct(prodBeingAdded, Math.max(1,getCurrentInput()));
         clearBeingAdded();
+        updateInput(0);
         updateProductTable();
     }
 }
@@ -158,7 +161,29 @@ function onRemoveProduct(){
 
 fetchProductIds().then(value => {
     if (value !== false){
-        productIds = value;
+        productIds = value.map(function (x) {
+            return parseInt(x);
+        });
         console.log("Got product indexes.");
     } else console.log("Failed to get product indexes.");
 });
+
+// Popup
+
+const popup = document.getElementById("message-popup");
+let popupTimeout = null;
+
+function showPopup(title, message = null, time = 2000){
+    // Remove previous hide message timout
+    if (popupTimeout != null) clearTimeout(popupTimeout);
+
+    popup.classList.add("show");
+    popup.innerText = (message === null ? "" : message);
+
+    popupTimeout = setTimeout(hidePopup,time);
+}
+
+function hidePopup(){
+    popup.classList.remove("show");
+    popupTimeout = null;
+}
