@@ -70,10 +70,6 @@ function addProduct(prodId, amount){
         fetchingProducts[prodId].amount += amount;
         return;
     }
-    if (productIds !== null && !productIds.includes(prodId)){
-        showPopup("Product bestaat niet", "Dit product bestaat niet!");
-        return;
-    }
     fetchingProducts[prodId] = {
         amount: amount,
         promise: fetchProduct(prodId),
@@ -130,6 +126,10 @@ let prodBeingAdded = null;
 
 function onAddProduct(){
     if (prodBeingAdded === null){
+        if (productIds !== null && !productIds.includes(currentInput)){
+            showPopup("Product bestaat niet", "Dit product bestaat niet!");
+            return;
+        }
         prodBeingAdded = currentInput;
         setInputPrefix("Aantal: ");
         updateInput(0);
