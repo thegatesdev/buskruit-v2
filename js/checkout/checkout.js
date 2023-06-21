@@ -55,7 +55,7 @@ async function fetchProducts(){
                     storage: content.storage,
                 }
             }else showPopup(json.error.title, json.error.msg);
-        }else showPopup("Kon product niet ophalen");
+        }else showPopup(`Kon product ${id} niet ophalen`);
         delete fetchingProducts[id];        
     }
 }
@@ -115,7 +115,7 @@ function appendProductRow(prod){
 
 let selectedProductRow = null;
 
-function setSelected(prodId = selectedProductRow){
+function setSelected(prodId){
     selectedProductRow = prodId;
     updateInput(selectedProductRow);
 }
@@ -126,11 +126,11 @@ let prodBeingAdded = null;
 
 function onAddProduct(){
     if (prodBeingAdded === null){
-        if (productIds !== null && !productIds.includes(currentInput)){
+        if (productIds !== null && !productIds.includes(parseInt(getCurrentInput()))){
             showPopup("Product bestaat niet", "Dit product bestaat niet!");
             return;
         }
-        prodBeingAdded = currentInput;
+        prodBeingAdded = getCurrentInput();
         setInputPrefix("Aantal: ");
         updateInput(0);
     }else{

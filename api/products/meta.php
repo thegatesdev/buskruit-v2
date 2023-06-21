@@ -16,14 +16,17 @@ if (!$conn) jsonExitError("Geen verbinding", "Kon geen verbinding maken met de d
 $input_json = json_decode(file_get_contents('php://input'), true);
 
 
-if (!isset($input_json['type'])) jsonExitError("No meta type");
+if (!isset($input_json['type'])) jsonExitError("No meta type", "Please supply a meta type");
 
 switch(strtolower($input_json['type'])){
     case "getproduct":
         getProductData($conn, $input_json);
         break;
     case "getindexes":
-        getIndexData($conn, $input_json);
+        getIndexData($conn);
+        break;
+    case "updatecheckout":
+        updateCheckoutData($conn, $input_json);
         break;
     default:
         jsonExitError("Unknown meta type");
@@ -46,7 +49,7 @@ function getProductData($conn, $data){
     ]);
 }
 
-function getIndexData($conn, $data){
+function getIndexData($conn){
     $result = mysqli_query($conn, "SELECT product_num FROM product");
     $ids = array();
     while ($row = mysqli_fetch_array($result, MYSQLI_NUM)){
@@ -55,4 +58,8 @@ function getIndexData($conn, $data){
     jsonExitOk([
         "product_ids" => $ids,
     ]);
+}
+
+function updateCheckoutData($conn, $data){
+    jsonExitError("Not implemented");
 }
