@@ -54,8 +54,8 @@ async function fetchProducts(){
                     amount: f.amount,
                     storage: content.storage,
                 }
-            }else showPopup(`Kon product ${id} niet ophalen`, json.error);
-        }else showPopup(`Kon product ${id} niet ophalen`);
+            }else popup(`Kon product ${id} niet ophalen`, json.error);
+        }else popup(`Kon product ${id} niet ophalen`);
         delete fetchingProducts[id];
     }
 }
@@ -127,7 +127,7 @@ let prodBeingAdded = null;
 function onAddProduct(){
     if (prodBeingAdded === null){
         if (productIds !== null && !productIds.includes(parseInt(getCurrentInput()))){
-            showPopup("Product bestaat niet", "Dit product bestaat niet!");
+            popup("Product bestaat niet", "Dit product bestaat niet!");
             return;
         }
         prodBeingAdded = getCurrentInput();
@@ -167,23 +167,3 @@ fetchProductIds().then(value => {
         console.log("Got product indexes.");
     } else console.log("Failed to get product indexes.");
 });
-
-// Popup
-
-const popup = document.getElementById("message-popup");
-let popupTimeout = null;
-
-function showPopup(title, message = null, time = 6000){
-    // Remove previous hide message timout
-    if (popupTimeout != null) clearTimeout(popupTimeout);
-
-    popup.classList.add("show");
-    popup.innerText = (message === null ? "" : message);
-
-    popupTimeout = setTimeout(hidePopup,time);
-}
-
-function hidePopup(){
-    popup.classList.remove("show");
-    popupTimeout = null;
-}

@@ -9,7 +9,7 @@ if (isset($_SESSION['user'])){
 
 $page_title = "Inloggen";
 $page_css = array("login");
-$page_js = array("login");
+$page_js = array("popup", "login");
 include_once("./parts/open.php"); 
 ?>
 <body>
@@ -22,9 +22,9 @@ include_once("./parts/open.php");
 
             <input id="login-button" type="submit" onclick="onLoginSubmit()" value="Inloggen" class="button-big">
         </div>
-        <div id="login-message">
-            <h5 id="login-message-title">Empty</h5>
-            <p id="login-message-text">Empty</p>
+        <div id="page-popup" onclick="hidePopup()">
+            <h2 class="title"></h2>
+            <p class="body"></p>
         </div>
     </div>
 </body>

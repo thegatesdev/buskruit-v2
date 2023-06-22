@@ -10,6 +10,15 @@
     flex-direction: row;
 }
 
+#page-popup{
+    position: fixed;
+    width: 100%;
+    top: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 #calculator{
     display: flex;
     flex: 1;

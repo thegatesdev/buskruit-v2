@@ -10,7 +10,7 @@ if (!isset($_SESSION['user'])){
 $page_title = "Kassa";
 $relative_path = "..";
 $page_css = array("checkout");
-$page_js = array("checkout/checkout", "checkout/input");
+$page_js = array("popup", "checkout/checkout", "checkout/input");
 $useJquery = true;
 include_once("../parts/open.php");
 ?>
@@ -70,6 +70,9 @@ include_once("../parts/open.php");
             </div>
         </div>
     </div>
-    <div id="message-popup" class="popup" onclick="hidePopup()"></div>
+    <div id="page-popup" onclick="hidePopup()">
+        <h2 class="title"></h2>
+        <p class="body"></p>
+    </div>
 </body>
 </html>

@@ -1,12 +1,6 @@
 const usernameField = document.getElementById("inp-username");
 const passwordField = document.getElementById("inp-password");
 
-const loginMessageDiv = document.getElementById("login-message");
-const messageTitleField = document.getElementById("login-message-title");
-const messageTextField = document.getElementById("login-message-text");
-
-hideErrorMessage();
-
 // Login
 
 function onLoginSubmit(){
@@ -15,14 +9,14 @@ function onLoginSubmit(){
 
 async function tryLogin(username, password){
     if (isEmptyField(username) || isEmptyField(password)){
-        displayErrorMessage("Onvoldoende velden ingevuld", "Vul gebruikersnaam en wachtwoord in!")
+        popup("Onvoldoende velden ingevuld", "Vul gebruikersnaam en wachtwoord in!")
         return;
     }
     const response = await fetchValidation(username, password);
     const jsonData = await response.json();
 
     if (!jsonData.ok){
-        displayErrorMessage("Inloggen mislukt", jsonData.error);
+        popup("Inloggen mislukt", jsonData.error);
         return;
     }
     
@@ -39,27 +33,6 @@ function fetchValidation(username, password){
             username: username,
         }),
     });
-}
-
-// Message
-
-let hideMessageTimeoutId;
-
-function displayErrorMessage(title, message, time = 4000){
-    // Remove previous hide message timout
-    if (hideMessageTimeoutId != null) clearTimeout(hideMessageTimeoutId);
-
-    // Set message display
-    messageTitleField.textContent = title;
-    messageTextField.textContent = message;
-    loginMessageDiv.style.transform = "scale(1)";
-
-    // Hide after timeout
-    hideMessageTimeoutId = setTimeout(hideErrorMessage, time);
-}
-
-function hideErrorMessage(){
-    loginMessageDiv.style.transform = "scale(0)";
 }
 
 // Util
