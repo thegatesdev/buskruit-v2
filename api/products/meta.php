@@ -10,13 +10,13 @@ if (!isset($_SESSION['user'])) jsonExitError("No session");
 include_once("../../lib/gdb.php");
 include_once("../../lib/login_settings.php");
 include_once("../../lib/db.php");
-if (!$conn) jsonExitError("Geen verbinding", "Kon geen verbinding maken met de database!");
+if (!$conn) jsonExitError("Kon geen verbinding maken met de database");
 
 // Get user input
 $input_json = json_decode(file_get_contents('php://input'), true);
 
 
-if (!isset($input_json['type'])) jsonExitError("No meta type", "Please supply a meta type");
+if (!isset($input_json['type'])) jsonExitError("Please supply a meta type");
 
 switch(strtolower($input_json['type'])){
     case "getproduct":
@@ -37,7 +37,7 @@ jsonExitError("Could not handle your request");
 
 function getProductData($conn, $data){
     $result = mysqli_query($conn, "SELECT product_num, description, unit, price, storage FROM product WHERE product_num={$data['product_id']} LIMIT 1");
-    if (mysqli_num_rows($result) != 1) jsonExitError("Product niet gevonden", "Dit product was niet gevonden!");
+    if (mysqli_num_rows($result) != 1) jsonExitError("Dit product was niet gevonden");
 
     $data = mysqli_fetch_assoc($result);
     jsonExitOk([

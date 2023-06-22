@@ -54,9 +54,9 @@ async function fetchProducts(){
                     amount: f.amount,
                     storage: content.storage,
                 }
-            }else showPopup(json.error.title, json.error.msg);
+            }else showPopup(`Kon product ${id} niet ophalen`, json.error);
         }else showPopup(`Kon product ${id} niet ophalen`);
-        delete fetchingProducts[id];        
+        delete fetchingProducts[id];
     }
 }
 
@@ -173,7 +173,7 @@ fetchProductIds().then(value => {
 const popup = document.getElementById("message-popup");
 let popupTimeout = null;
 
-function showPopup(title, message = null, time = 2000){
+function showPopup(title, message = null, time = 6000){
     // Remove previous hide message timout
     if (popupTimeout != null) clearTimeout(popupTimeout);
 

@@ -22,7 +22,7 @@ async function tryLogin(username, password){
     const jsonData = await response.json();
 
     if (!jsonData.ok){
-        displayErrorMessage(jsonData.error.title, jsonData.error.msg);
+        displayErrorMessage("Inloggen mislukt", jsonData.error);
         return;
     }
     
